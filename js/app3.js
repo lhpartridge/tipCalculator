@@ -9,14 +9,14 @@
 
 
 const confirmBtn = document.getElementById('confirmBtn');
-const totalDisplay = document.getElementById('total');
+const yourTotal = document.getElementById('yourTotal');
 const cartSubtotal = document.getElementById('cartSubtotal');
 const receipt = document.getElementById('receipt');
 
 const taxRate = 0.08;
 
 let subtotal = 0;
-let billTotal = 0;
+// let billTotal = 0;
 
 let receiptArray = [];
 
@@ -240,27 +240,47 @@ confirmBtn.addEventListener('click', (e)=> {
 })
 
 const getTotal=()=> {
-    const subtotal = parseFloat(cartSubtotal.innerText);
+    // subtotal = parseFloat(cartSubtotal.innerText);
     const tipAmt = parseFloat(document.getElementById('tipAmt').value);
     const otherAmt = parseFloat(document.getElementById('otherAmt').value);
     const yourTip = document.getElementById('yourTip');
     const billSubtotal = document.getElementById('billSubtotal');
-
-    billSubtotal.innerText = (subtotal).toFixed(2);
-
+    let taxAmt = 0;
+    const yourTax = document.getElementById('yourTax');
+    taxAmt = subtotal * taxRate;
+    yourTax.innerText = taxAmt;
+    let billTotal = subtotal;
+    console.log(subtotal, billTotal)
+    billSubtotal.innerText = (billTotal).toFixed(2);
+    
+    
+    // let total = subtotal + taxAmt;
+    
+    // console.log(subtotal, taxAmt, subtotal + taxAmt, total);
+    // const yourTotal = document.getElementById('yourTotal');
+    // console.log(total);
+    // yourTotal.innerText = (total);
+    
     // A ternary will allow a value to be assigned; if/else can't store values
     let receiptTip = isNaN(tipAmt) ? otherAmt : (subtotal * tipAmt);
-
-    // let total = isNaN(tipAmt) ? subtotal + otherAmt + taxTotal : (subtotal * tipAmt) + subtotal + taxTotal;
-
     
-    console.log(subtotal, , billTotal);
-    // billSubtotal = (total * taxRate).toFixed(2);
-
+    // let total = isNaN(tipAmt) ? subtotal + otherAmt + taxTotal : (subtotal * tipAmt) + subtotal + taxTotal;
+    
+    
+    
+    
+    // console.log(subtotal, billTotal);
+    // billSubtotal is an element
+    // I need to get the pretax subtotal
+    // billSubtotal = 
+    
     isNaN(tipAmt) ? total = subtotal + otherAmt : total = subtotal + (subtotal * tipAmt);
-    totalDisplay.innerText = total.toFixed(2);
+    yourTotal.innerText = total.toFixed(2);
 
     yourTip.innerText = receiptTip.toFixed(2);
+    yourTotal.innerText = (subtotal + receiptTip + taxAmt).toFixed(2);
+
+
 }
 
 
@@ -330,8 +350,6 @@ const cartButtons = document.querySelectorAll('.cart-btn');
 cartButtons.forEach(button => {
     const price = parseFloat(button.getAttribute('data-price'));
     let qty = parseFloat(button.getAttribute('data-qty'));
-    let taxAmt = 0;
-    const yourTax = document.getElementById('yourTax');
     const name = button.getAttribute('data-name');
     const id = parseFloat(button.getAttribute('data-id'));
     // When the property and value are the same, use the shortcut of just listing the property/value name
@@ -369,11 +387,13 @@ cartButtons.forEach(button => {
         }
         // console.log(receiptArray);
         subtotal+=price;
-        taxAmt = subtotal * taxRate;
-        yourTax.innerText = taxAmt;
-        billTotal = subtotal + taxAmt;
 
-        console.log(subtotal, taxAmt, billTotal);
+        // billSubtotal.innerText = billTotal.toFixed(2);
+
+        // subtotal is displaying the post tax amount on the tip calculator but not on the receipt
+        // taxAmt displays correctly on the receipt, but is not calculating
+        // billTotal is not displaying
+        // console.log(subtotal, billTotal);
         
         // let billTotal = (subtotal + taxAmt);
         // total.innerText = 
@@ -386,6 +406,8 @@ cartButtons.forEach(button => {
         // receiptArray = [...receiptArray, itemObj];
         // console.log(receiptArray);
         // console.log(qty, name, price, subtotal);
+
+        // also need on the receipt for billTotal
         cartSubtotal.innerText = subtotal.toFixed(2);
     })
 })

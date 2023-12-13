@@ -1,8 +1,130 @@
+:root {
+    --lucky: 'Luckiest Guy', cursive;
+    --macondo: 'Macondo Swash Caps', cursive;
+    --neon: 'Neonderthaw', cursive;
+}
+
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
+
+body {
+    background-color: rgb(170, 214, 252);
+}
+
+h1, .intro-text {
+    color: white;
+}
+
+h2, h3 {
+    color: rgb(20, 88, 157);
+}
+
+p {
+    font-size: 28px;
+    font-family: var(--macondo);
+}
+
+.header {
+    padding: 10px 0;
+    background-color: dodgerblue;
+    border-bottom: 3px solid white;
+}
+
+.main {
+    padding: 40px 0;
+}
+
+.section {
+    padding: 60px 0;
+}
+
+.menu-row {
+    padding: 40px 0;
+}
+
+h1 {
+    font-size: calc(48px + (72 - 48) * ((100vw - 300px) / (1600 - 300)));
+    font-family: var(--macondo);
+    text-transform: capitalize;
+}
+
+h2 {
+    font-size: calc(42px + (64 - 42) * ((100vw - 300px) / (1600 - 300)));
+    font-family: var(--macondo);
+    text-transform: capitalize;
+}
+
+h3 {
+    font-size: calc(32px + (48 - 32) * ((100vw - 300px) / (1600 - 300)));
+    font-family: var(--macondo);
+    text-transform: capitalize;
+}
+
+h4 {
+    font-size: calc(24px + (36 - 24) * ((100vw - 300px) / (1600 - 300)));
+    font-family: var(--macondo);
+    text-transform: capitalize;
+}
+
+p {
+    font-size: calc(22px + (24 - 22) * ((100vw - 300px) / (1600 - 300)));
+}
+
+#tipAmt, #otherAmt, #confirmBtn, label, #totalText, #total {
+    font-size: calc(22px + (24 - 22) * ((100vw - 300px) / (1600 - 300)));
+}
+
+#totalText, #total {
+    font-size: 48px;
+    color: rgb(20, 88, 157);
+}
+
+.intro-text {
+    font-size: calc(24px + (28 - 24) * ((100vw - 300px) / (1600 - 300)));
+}
+
+.appetizers {
+    /* background-color: pink; */
+}
+
+.entrees {
+    /* background-color: antiquewhite; */
+}
+
+.drinks {
+    /* background-color: azure; */
+}
+
+.desserts {
+    /* background-color: beige; */
+}
+
+.img-div {
+    height: 240px;
+    /* background-color: aquamarine; */
+    /* align-items: */
+}
+
+.card {
+    /* margin-bottom: 20px; */
+}
+
+.card-img {
+    max-height: 240px;
+}
+
+.subtotal-div, .ticket-div {
+    padding: 25px;
+    background-color: whitesmoke;
+    border: 3px solid dodgerblue;
+    border-radius: 5px;;
+}
+
+
 
 .colophon {
     display: block;
