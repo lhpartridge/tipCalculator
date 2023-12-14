@@ -407,25 +407,31 @@ const addItems=(price, qty, name, id)=> {
         itemTotal: qty * price
     }
     receiptArray = [...receiptArray, itemObj]
+    makeReceipt(itemObj, receipt);
+
+    subtotal+= itemObj.itemTotal;
+    
+    // Herb commented out this and made changes
+    // my changes my conflict with his
     // console.log(itemObj, receiptArray);
 
         //     if (itemObj.qty == 1) {
         //     receiptArray = [...receiptArray, itemObj];
         //     makeReceipt(itemObj, receipt);
         // } else {
-            for (let i = 0; i < receiptArray.length; i++) {
-                // console.log(receiptArray)
-                if (receiptArray[i].id == id) {
-                    receiptArray[i].qty = itemObj.qty++;
-                    receiptArray[i].itemTotal = receiptArray[i].qty * price;
+            // for (let i = 0; i < receiptArray.length; i++) {
+            //     // console.log(receiptArray)
+            //     if (receiptArray[i].id == id) {
+            //         receiptArray[i].qty = itemObj.qty++;
+            //         receiptArray[i].itemTotal = receiptArray[i].qty * price;
 
 
-                    console.log("receiptArray", receiptArray[i], receiptArray[i].qty, receiptArray[i].itemTotal)
-                    // changed from updateReceipt to make Receipt
-                    makeReceipt(receiptArray[i], receiptArray[i].qty, receiptArray[i].itemTotal);
-                }
-                subtotal += receiptArray[i].itemTotal;
-            }
+            //         console.log("receiptArray", receiptArray[i], receiptArray[i].qty, receiptArray[i].itemTotal)
+            //         // changed from updateReceipt to make Receipt
+            //         makeReceipt(receiptArray[i], receiptArray[i].qty, receiptArray[i].itemTotal);
+            //     }
+            //     subtotal += receiptArray[i].itemTotal;
+            // }
         // }
 
         // changed to subtotal += itemQty and moved into receipt loop

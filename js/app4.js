@@ -1,6 +1,3 @@
-// Saved 12 14 23
-
-
 // Build a calculator that will take the subtotal of the tab.
 // The tip can be 15%, 10%, 20%
 // Have cards with food items, total items chosen, place in subtotal, then return subtotal, ask for tip, calcuate total, return total
@@ -19,7 +16,7 @@ const receipt = document.getElementById('receipt');
 const taxRate = 0.08;
 
 let subtotal = 0;
-let billTotal = 0;
+// let billTotal = 0;
 
 let receiptArray = [];
 
@@ -168,7 +165,7 @@ const menuItems = [
         desc: 'ice cream parfait with strawberries and chocolate sauce',
         imgUrl: 'media/glory.jpg',
         price: 8.00,
-        qty: 0
+        qty: 5
     },
     {
         id: 17,
@@ -210,7 +207,6 @@ menuItems.forEach(item => {
     let thisType = item.type;
     card.classList.add('card', 'h-100', `${thisType}`);
     card.innerHTML = `
-            <div class="card ${item.type}">
             <div class="img-div d-flex align-items-start">
                 <img src="${item.imgUrl}" alt="${item.desc}" class="img-fluid card-img" />
             </div>
@@ -257,8 +253,6 @@ menuItems.forEach(item => {
 
 confirmBtn.addEventListener('click', (e)=> {
     e.preventDefault();
-    // console.log(receiptArray);
-    // console.log("subtotal", subtotal)
     getTotal();
 })
 
@@ -272,9 +266,8 @@ const getTotal=()=> {
     const yourTax = document.getElementById('yourTax');
     taxAmt = subtotal * taxRate;
     yourTax.innerText = taxAmt.toFixed(2);
-    // put bill total back as a global variable
-    // billTotal = subtotal;
-    console.log("subtotal", subtotal, billTotal, "billTotal")
+    let billTotal = subtotal;
+    console.log(subtotal, billTotal)
     billSubtotal.innerText = (billTotal).toFixed(2);
     
     // A ternary will allow a value to be assigned; if/else can't store values
@@ -291,9 +284,7 @@ const getTotal=()=> {
 // arguments: array, element to which the li will be appended
 // run function as each item is added to the cart
 // Change the display to a table
-// removed element as an argument passed in to make receipt
-const makeReceipt =(obj)=> {
-    // console.log("in makeReceipt, qty is", obj.qty);
+const makeReceipt =(obj, element)=> {
     const tableRow = document.createElement('tr');
     tableRow.classList.add('receipt-item');
 
@@ -320,9 +311,7 @@ const makeReceipt =(obj)=> {
     tableRow.appendChild(receiptPrice);
     tableRow.appendChild(receiptSubTotal);
 
-    // changed from element
-    receipt.appendChild(tableRow);
-    // element.appendChild(tableRow);
+    element.appendChild(tableRow);
 }
 
 const updateReceipt =(obj, qty, itemTotal)=> { 
@@ -344,61 +333,46 @@ cartButtons.forEach(button => {
     const id = parseFloat(button.getAttribute('data-id'));
     // When the property and value are the same, use the shortcut of just listing the property/value name
 
-    // cartButtons[i].dataset.qty = menuItems[i].qty;
-
-
     // Try putting the btnAdd here
     // Not a good idea--put it in addItems
-    let btnQty = parseFloat(button.getAttribute('data-qty'))
-    const btnSubtract = document.querySelectorAll('.btn-subtract');
-    btnSubtract.forEach(subButton => {
-        const btnId = parseFloat(subButton.getAttribute('data-id'))
-        // let btnQty = parseFloat(button.getAttribute('data-qty'))
-        const spanQty = document.getElementById(`quantity${btnId}`)
-        subButton.addEventListener('click', ()=> {
-            if (btnId == id) {
-                if (btnQty != 0) {
-                    btnQty-=1;
-                } else {
-                    btnQty = 0;
-                }
-                qty = btnQty;
-                // console.log(id, btnId, qty, btnQty);
-                spanQty.innerText = btnQty;
-                button.setAttribute('data-qty', qty);
-                console.log(button);
-            }
+    // const btnAdd = document.querySelectorAll('.btn-add');
+    // btnAdd.forEach(button => {
+    //     const btnId = parseFloat(button.getAttribute('data-id'))
+    //     let btnQty = parseFloat(button.getAttribute('data-qty'))
+    //     const spanQty = document.getElementById(`quantity${btnId}`)
+    //     button.addEventListener('click', ()=> {
+    //         console.log(qty, btnQty);
+    //         if (btnId == id) {
+    //             btnQty+=1;
+    //             qty = btnQty;
+    //             console.log(id, btnId, qty, btnQty);
+    //             spanQty.innerText = btnQty;
+    //         }
             
-        })
-    })
+    // //         for (let i = 0; i < menuItems.length; i++) {
+    // //             // console.log(i);
+    
+    // //             if (menuItems[i].id == btnId && menuItems[i].qty < 20) {
+    // //                 // if (menuItems[i].id == btnId) {
+    // //                 // menuItems[i].qty+=1;
+    // //                 // menuItems[i].qty = btnQty;
+    // //                 console.log(menuItems[i].id, menuItems[i].qty, btnQty);
+    // //                 spanQty.innerText = menuItems[i].qty;
+    // //             }
+    // //         }
+    //     })
+    // })
 
-    const btnAdd = document.querySelectorAll('.btn-add');
-    btnAdd.forEach(addButton => {
-        const btnId = parseFloat(addButton.getAttribute('data-id'))
-        // let btnQty = parseFloat(button.getAttribute('data-qty'))
-        const spanQty = document.getElementById(`quantity${btnId}`)
-        addButton.addEventListener('click', ()=> {
-            if (btnId == id) {
-                btnQty+=1;
-                qty = btnQty;
-                // console.log(id, btnId, qty, btnQty);
-                spanQty.innerText = btnQty;
-                button.setAttribute('data-qty', qty);
-            }
-            
-        })
-    })
-
+    
     button.addEventListener('click', ()=> {
-        // console.log(price, qty, name, id);
-        // The quantity increments worked before adding the add/subtract buttons
-        // qty+=1;
-
+        qty+=1;
         addItems(price, qty, name, id);
     })
 })
 
 const addItems=(price, qty, name, id)=> {
+    let btnQty = parseFloat(button.getAttribute('data-qty'))
+
     let itemObj = {
         id,
         name,
@@ -406,33 +380,67 @@ const addItems=(price, qty, name, id)=> {
         price,
         itemTotal: qty * price
     }
-    receiptArray = [...receiptArray, itemObj]
-    // console.log(itemObj, receiptArray);
 
-        //     if (itemObj.qty == 1) {
-        //     receiptArray = [...receiptArray, itemObj];
-        //     makeReceipt(itemObj, receipt);
-        // } else {
+    // Try putting the add/subtract buttons here
+    const btnAdd = document.querySelectorAll('.btn-add');
+    btnAdd.forEach(button => {
+        const btnId = parseFloat(button.getAttribute('data-id'))
+        // let btnQty = parseFloat(button.getAttribute('data-qty'))
+        const spanQty = document.getElementById(`quantity${btnId}`)
+        button.addEventListener('click', ()=> {
+            console.log(qty, btnQty);
+            if (btnId == id) {
+                btnQty+=1;
+                qty = btnQty;
+                console.log(id, btnId, qty, btnQty);
+                spanQty.innerText = btnQty;
+            }
+            
+        })
+    })
+
+    // put btnSubtract here
+    const btnSubtract = document.querySelectorAll('.btn-subtract');
+    btnSubtract.forEach(button => {
+        button.addEventListener('click', ()=> {
+            console.log(receiptArray);
+            const btnId = parseFloat(button.getAttribute('data-id'))
+            // let btnQty = parseFloat(button.getAttribute('data-qty'))
+            const spanQty = document.getElementById(`quantity${btnId}`)
+            
+            console.log(qty, btnQty);
+            if (btnId == id) {
+                btnQty-=1;
+                qty = btnQty;
+                console.log(id, btnId, qty, btnQty);
+                spanQty.innerText = btnQty;
+            }
+            // console.log(btnId, btnQty, spanQty, menuItems);
+            // for (let i = 0; i < menuItems.length; i++) {
+            //     // console.log(i);
+    
+            //     if (menuItems[i].id == btnId && menuItems[i].qty > 0) {
+            //         menuItems[i].qty-=1;
+            //         spanQty.innerText = menuItems[i].qty;
+            //     }
+            // }
+        })
+    })
+
+
+            if (itemObj.qty == 1) {
+            receiptArray = [...receiptArray, itemObj];
+            makeReceipt(itemObj, receipt);
+        } else {
             for (let i = 0; i < receiptArray.length; i++) {
-                // console.log(receiptArray)
                 if (receiptArray[i].id == id) {
                     receiptArray[i].qty = itemObj.qty++;
                     receiptArray[i].itemTotal = receiptArray[i].qty * price;
-
-
-                    console.log("receiptArray", receiptArray[i], receiptArray[i].qty, receiptArray[i].itemTotal)
-                    // changed from updateReceipt to make Receipt
-                    makeReceipt(receiptArray[i], receiptArray[i].qty, receiptArray[i].itemTotal);
+                    updateReceipt(receiptArray[i], receiptArray[i].qty, receiptArray[i].itemTotal);
                 }
-                subtotal += receiptArray[i].itemTotal;
             }
-        // }
-
-        // changed to subtotal += itemQty and moved into receipt loop
-        // subtotal+=price;
-
-        // billTotal = subtotal;
-        console.log("in addItems", subtotal);
+        }
+        subtotal+=price;
         cartSubtotal.innerText = subtotal.toFixed(2);
 }
 
